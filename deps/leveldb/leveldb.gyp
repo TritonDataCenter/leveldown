@@ -1,7 +1,7 @@
 {'targets': [{
     'target_name': 'leveldb'
   , 'variables': {
-        'ldbversion': '1.18.0'
+        'ldbversion': '1.11.0'
     }
   , 'type': 'static_library'
 		# Overcomes an issue with the linker and thin .a files on SmartOS
@@ -26,13 +26,9 @@
     ]
   , 'conditions': [
         ['OS == "win"', {
-            'conditions': [
-                ['MSVS_VERSION != "2015" and MSVS_VERSION != "2013"', {
-                     'include_dirs': [ 'leveldb-<(ldbversion)/port/win' ]
-                }]
-            ],
             'include_dirs': [
-                'port-libuv/'
+                'leveldb-<(ldbversion)/port/win'
+              , 'port-libuv/'
             ]
           , 'defines': [
                 'LEVELDB_PLATFORM_UV=1'
@@ -65,11 +61,7 @@
                 '-fno-builtin-memcmp'
               , '-fPIC'
             ]
-          , 'cflags': [ '-std=c++0x' ]
-          , 'cflags!': [ '-fno-tree-vrp' ]
-        }]
-      , ['OS != "win"' and 'OS != "freebsd"', {
-            'cflags': [
+          , 'cflags': [
                 '-Wno-sign-compare'
               , '-Wno-unused-but-set-variable'
             ]
@@ -85,25 +77,9 @@
                 '-pthread'
             ]
         }]
-      , ['OS == "freebsd"', {
-            'defines': [
-                'OS_FREEBSD=1'
-              , '_REENTRANT=1'
-            ]
-          , 'libraries': [
-                '-lpthread'
-            ]
-          , 'ccflags': [
-                '-pthread'
-            ]
-          , 'cflags': [
-                '-Wno-sign-compare'
-            ]
-        }]
       , ['OS == "solaris"', {
             'defines': [
                 'OS_SOLARIS=1'
-              , '_REENTRANT=1'
             ]
           , 'libraries': [
                 '-lrt'
@@ -139,7 +115,6 @@
       , 'leveldb-<(ldbversion)/db/filename.h'
       , 'leveldb-<(ldbversion)/db/dbformat.cc'
       , 'leveldb-<(ldbversion)/db/dbformat.h'
-      , 'leveldb-<(ldbversion)/db/leveldb_main.cc'
       , 'leveldb-<(ldbversion)/db/log_format.h'
       , 'leveldb-<(ldbversion)/db/log_reader.cc'
       , 'leveldb-<(ldbversion)/db/log_reader.h'
@@ -163,7 +138,6 @@
       , 'leveldb-<(ldbversion)/include/leveldb/cache.h'
       , 'leveldb-<(ldbversion)/include/leveldb/comparator.h'
       , 'leveldb-<(ldbversion)/include/leveldb/db.h'
-      , 'leveldb-<(ldbversion)/include/leveldb/dumpfile.h'
       , 'leveldb-<(ldbversion)/include/leveldb/env.h'
       , 'leveldb-<(ldbversion)/include/leveldb/filter_policy.h'
       , 'leveldb-<(ldbversion)/include/leveldb/iterator.h'

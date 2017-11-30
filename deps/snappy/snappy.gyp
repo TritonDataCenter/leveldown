@@ -5,7 +5,6 @@
           , ['OS=="mac"',     {'os_include': 'mac'}]
           , ['OS=="solaris"', {'os_include': 'solaris'}]
           , ['OS=="win"',     {'os_include': 'win32'}]
-          , ['OS=="freebsd"', {'os_include': 'freebsd'}]
         ]
     }
   , 'target_name': 'snappy'
@@ -14,16 +13,14 @@
   , 'standalone_static_library': 1
   , 'include_dirs': [
         '<(os_include)'
-      , 'snappy-1.1.1'
+      , 'snappy-1.1.0'
     ]
   , 'direct_dependent_settings': {
         'include_dirs': [
-            'snappy-1.1.1'
+            '<(os_include)'
+          , 'snappy-1.1.0'
         ]
     }
-  , 'defines': [
-        'HAVE_CONFIG_H=1'
-    ]
   , 'conditions': [
         ['OS == "win"', {
             'defines': [
@@ -39,13 +36,6 @@
             }
          }]
       , ['OS == "linux"', {
-            'cflags': [
-                '-Wno-sign-compare'
-              , '-Wno-unused-function'
-            ]
-          , 'cflags!': [ '-fno-tree-vrp' ]
-        }]
-      , ['OS == "freebsd"', {
             'cflags': [
                 '-Wno-sign-compare'
               , '-Wno-unused-function'
@@ -67,12 +57,12 @@
         }]
     ]
   , 'sources': [
-        'snappy-1.1.1/snappy-internal.h'
-      , 'snappy-1.1.1/snappy-sinksource.cc'
-      , 'snappy-1.1.1/snappy-sinksource.h'
-      , 'snappy-1.1.1/snappy-stubs-internal.cc'
-      , 'snappy-1.1.1/snappy-stubs-internal.h'
-      , 'snappy-1.1.1/snappy.cc'
-      , 'snappy-1.1.1/snappy.h'
+        'snappy-1.1.0/snappy-internal.h'
+      , 'snappy-1.1.0/snappy-sinksource.cc'
+      , 'snappy-1.1.0/snappy-sinksource.h'
+      , 'snappy-1.1.0/snappy-stubs-internal.cc'
+      , 'snappy-1.1.0/snappy-stubs-internal.h'
+      , 'snappy-1.1.0/snappy.cc'
+      , 'snappy-1.1.0/snappy.h'
     ]
 }]}
